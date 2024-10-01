@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
 
+
+def get_input(input_type, max_value):
+    is_valid = False
+    while not is_valid:
+        # get input from the user
+        user_value = float(input("Enter " + input_type + ":\t"))
+        if user_value >= 0 and user_value <= max_value:
+            is_valid = True
+        else:
+            print(input_type + " must be greater than 0 and no more than "+ str(max_value))
+    
+    return user_value
+
 # display a welcome message
 print("Welcome to the Future Value Calculator")
 print()
@@ -8,39 +21,14 @@ choice = "y"
 number = 50
 # will loop when choice is y
 while choice.lower() == "y":
-    # get monthly investment from user and check is matches requirments. If not loop and have them try again
-    is_valid = False
-    while not is_valid:
-        # get input from the user
-        monthly_investment = float(input("Enter monthly investment:\t"))
-        if monthly_investment >= 0 and monthly_investment <= 1000:
-            is_valid = True
-        else:
-            print("Monthly Investment must be greater than 0 and no more than $1000")
-
-    # get yearly interest rate from user and check is matches requirments. If not loop and have them try again
-    is_valid = False
-    while not is_valid:
-        yearly_interest_rate = float(input("Enter yearly interest rate:\t"))
-        if yearly_interest_rate > 0 and yearly_interest_rate <= 15:
-            is_valid = True
-        else:
-            print("Yearly interest rate must be greater than 0 and no more than 15")
-
-    # get number of years from user and check is matches requirments. If not loop and have them try again
-    is_valid = False
-    while not is_valid:
-        years = int(input("Enter number of years:\t\t"))
-        if years > 0 and years <= 50:
-            is_valid = True
-        else:
-            print("Number of years must be greater than 0 and no more than 50")
-
-    is_valid = False
+    
+    monthly_investment   = get_input("monthly investment", 1000)
+    yearly_interest_rate = get_input("Yearly interest rate", 15)
+    years = get_input('Number of years', 50)
 
     # convert yearly values to monthly values
     monthly_interest_rate = yearly_interest_rate / 12 / 100
-    months = years * 12
+    months = int(years) * 12
 
     # calculate the future value
     future_value = 0
@@ -54,7 +42,7 @@ while choice.lower() == "y":
 
 
     # display the result
-    print("Year =  12\tFuture value = ", round(future_value, 2))
+    print("Year = " + years+ "\tFuture value = ", round(future_value, 2))
     print()
 
     # see if the user wants to continue
