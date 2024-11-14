@@ -23,26 +23,26 @@ def main():
     trips = [] 
 
     # add Items to list
-    more = "y"
-    while more.lower() == "y":
-        miles_driven = get_miles_driven()
-        gallons_used = get_gallons_used()
+    more = "y" # set more to 'y'
+    while more.lower() == "y": # while more in lowercase is 'y'
+        miles_driven = get_miles_driven() # set miles_driven to the result of calling the funciton get_miles_driven
+        gallons_used = get_gallons_used() # set gallon_used to the result of calling the funciton get_gallon_used
                                  
-        mpg = round((miles_driven / gallons_used), 2)
-        print(f"Miles Per Gallon:\t{mpg}")
-        print()
+        mpg = round((miles_driven / gallons_used), 2) # set mpg to miles_driven / gallons used rounded by 2
+        print(f"Miles Per Gallon:\t{mpg}") # print "Miles Per Gallon:\t{mpg}"
+        print() # print blank line
         
-        trips.append([miles_driven, gallons_used, mpg])
+        trips.append([miles_driven, gallons_used, mpg]) # add miles_driven, gallons_used, mpg to the list trips
 
-        more = input("More entries? (y or n): ")
+        more = input("More entries? (y or n): ") # get the input and store it in more
     
     # Send list to file
-    with open(FILE_NAME,'w',newline='') as output_file:
-        writer = csv.writer(output_file)
-        writer.writerows(trips)
+    with open(FILE_NAME,'w',newline='') as output_file: # open file write as output_file
+        writer = csv.writer(output_file) # set the writer in the output file
+        writer.writerows(trips) # write trips into file
 
-    print("Bye!")
+    print("Bye!") # print "Bye!"
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": # if name is main
+    main() # call main
 

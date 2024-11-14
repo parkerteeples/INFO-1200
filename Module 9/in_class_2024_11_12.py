@@ -1,17 +1,17 @@
-import csv
+import pickle
+def main():
+    courses = [["Python", 3],
+               ["Trig", 3],
+               ["Physics", 4],
+               ["Yoga", 2]]
+    with open("classes.bin", "wb") as file:
+        pickle.dump(courses, file)
+    with open("classes.bin", "rb") as file:
+        course_list = pickle.load(file)
+    i = 0
+    while i < len(course_list):
+        course = course_list[i]
+        print(course[0], course[1], end=" ")
+        i += 2
 
-FILE_NAME = "test.csv"
-
-master_list = []
-master_list.append(['Name','Age']) # Appending a Header Row
-
-more = 'y'
-while more == 'y':
-    name = input("Enter your name: ")
-    age = input("Enter your age: ")
-    master_list.append([name,age])
-    more = input('Continue? (y/n):')
-
-with open(FILE_NAME, 'w', newline ='') as output_file:
-    writer = csv.writer(output_file)
-    writer.writerows(master_list)
+main()
