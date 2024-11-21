@@ -1,8 +1,8 @@
-#Name: First Name Last Name
+#Name: Parker Teeples
 #Class: INFO 1200
 #Section: See syllabus, schedule, or Canvas course for section number
-#Professor: Sharp
-#Date:
+#Professor: Tyler Bartholamew
+#Date: 11/20/2024
 #Project #: M09
 #By submitting this assignment, I declare that the source code contained in this assignment was written s
 #olely by me, unless specifically provided in the assignment. I attest that no part of this assignment, i
@@ -10,3 +10,94 @@
 #Claude, etc.) nor obtained from a paid solution service (e.g., Chegg, Course Hero, Bartleby, etc.). I un
 #derstand that copying any source code, in whole or in part, constitutes cheating, and that I will receiv
 #e a zero on this project if I am found in violation of this policy.
+
+import csv # import csv
+
+FILENAME = 'monthly_sales.csv' # set 'monthly_sales.csv' as FILENAME
+
+def display_title(): # define the display_title funciton
+    print("Parker Teeples Monthly Sales") # print "Parker Teeples Monthly Sales"
+    print() # Print Blank line
+
+def display_menu(): # define the display_menu function
+    print("COMMAND MENU") # print "COMMAND MENU"
+    print("monthly - View monthly sales") # print "monthly - View monthly sales"
+    print("yearly  - View yearly summary") # print "yearly  - View yearly summary"
+    print("edit    - Edit sales for a month") # print "edit    - Edit sales for a month"
+    print("exit    - Exit program") # print "exit    - Exit program"
+
+
+def main(): # define the main function
+    display_title() # call display_title
+    display_menu() # call display_menu
+    sales = read_sales() # set sales to result of calling the function read_sales
+    while True:
+        command = input("Command: ")
+        if command == "monthly":
+            view_monthly_sales(sales)
+        elif command == "yearly":
+            view_yearly_summary(sales)
+        elif command == "edit":
+            edit(sales)
+        elif command == "exit":
+            break
+        else:
+            print("Not a valid command. Please try again.\n")
+    print("Bye!")
+
+def read_sales(): # define the read_sales function
+    sales = [] # set sales
+    with open(FILENAME, newline="") as file:
+        reader = csv.reader(file)
+        for row in reader:
+            sales.append(row)
+    return sales # return sales
+
+def view_monthly_sales(sales): # define the view_monthly_sales function with the parameter sales
+    for row in sales:
+        print(f"{row[0]} - {row[1]}")
+    print() # print blank row
+
+def view_yearly_summary(sales): # define the view_yearly_summary with the paramater sales
+    total = 0 # set total to 0
+    for row in sales:
+        amount = int(row[1])
+        total += amount
+
+    # get count
+    count = len(sales)
+    
+    # calculate average
+    average = total / count
+    average = round(average, 2)
+
+    # format and display the result
+    print("Yearly total:    ", total)
+    print("Monthly average: ", average)        
+    print()
+
+def edit(sales): # define the edit function with the parameter sales
+    names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep','Oct', 'Nov', 'Dec'] # assaign a list of abbreviated months
+    userloop = True # assaign userloop as true
+    while userloop: # while userloop is true
+        name = input("Input a Month: ").title() # set name as the lowercase of user input
+        if name not in names: # if name is not in names
+            print("Invalid three-letter month") # print "Invalid three-letter month"
+        else: # else
+            userloop = False # set userloop to false
+    index = names.index(name) # set index to the names index of name
+    amount = int(input("Sales Amount: ")) # set amount as the int input as "Sales Amount: "
+    month = [] # set month as a list
+    month.append(name) # append name to month
+    month.append(str(amount)) # append amount as a string to month
+    sales[index] = month # the index of sales is set to month
+    write_sales(sales) # call the function write_sales with the argument sales
+    print(f"Sales amount for {month[0]} was modified.") # print "Sales amount for {month[0]} was modified."
+    print() # print blank space
+
+def write_sales(sales): # define the write_sales function with the parameter sales
+    with open(FILENAME, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerows(sales)
+
+if __name__ == "__main__":  main() # if name is main call main
