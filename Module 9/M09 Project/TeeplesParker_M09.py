@@ -96,8 +96,8 @@ def edit(sales): # define the edit function with the parameter sales
     print() # print blank space
 
 def write_sales(sales): # define the write_sales function with the parameter sales
-    with open(FILENAME, "w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerows(sales)
+    with open(FILENAME, "w", newline="") as file: # open FILENAME as write as file
+        writer = csv.writer(file) # writer is set to the writer of file
+        writer.writerows(sales) # writer writes the rowes from sales
 
 if __name__ == "__main__":  main() # if name is main call main

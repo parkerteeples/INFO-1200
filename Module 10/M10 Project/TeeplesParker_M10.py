@@ -30,6 +30,7 @@ def display_menu(): # defines the diplay_menu function
     print() # prints a blank line
 
 def main(): # define the main function
+    contacts = []
     contacts = read_contacts() # assaignes the variable contacts to the result of the function read_contacts
     display_title() # call the display_title function
     display_menu() # call the display_menu function
@@ -59,3 +60,61 @@ def read_contacts(): # define the read_contacts function
         return contacts # return contacts
     except FileNotFoundError: # if there is a FileNotFoundError
         print("Could not find contacts file! Starting new contacts file...") # print "Could not find contacts file! Starting new contacts file..."
+
+def display(contacts): # define the function contacts with the parameter contacts
+    if not contacts: # if the length of contacts is 0
+        print("There are no contacts in the list") # print "There are no contacts in the list"
+    else: # else
+        for i, row in enumerate(contacts, start=1): # for i and row in the enumerate of contacts starting with 1
+            print(f"{i}. {row[0]}") # print i and row[0]
+        print() # print blank line
+
+def view(contacts): # define the view function with the parameter contacts
+    number = get_contact_number(contacts) # set number to the result of the get_contact_number with the argument contacts
+    if number > 0: # if number is bigger than zero
+        contact = contacts[number-1] # set contact to contacts place of number - 1
+        print("Name:", contact[0]) # print "Name:", contact[0]
+        print("Email:", contact[1]) # print "Email:", contact[1]
+        print("Phone:", contact[2]) # print "Phone:", contact[2]
+        print() # print blank line
+
+def get_contact_number(contacts): # define the get_contact_number with the parameter contacts
+    while True: # while True
+        try: # try for error
+            number = int(input("Number: ")) # set number to the input from the user
+        except ValueError: # if a ValueError is raised
+            print("Invalid integer.\n") # print "Invalid integer.\n"
+            return -1 # return -1
+            
+        if number < 1 or number > len(contacts): # if number is less than one or number is bigger than the length of contacts
+            print("Invalid contact number.\n") # print "Invalid contact number.\n"
+            return -1 # return -1
+        else: # else
+            return number # return number
+
+def add(contacts): # define the add function with the parameter contacts
+    name = input("Name: ") # assaign name to the users input
+    email = input("Email: ") # assaign email to the users input
+    phone = input("Phone: ") # assaign phone to the users input
+    contact = [] # assaign contacts an empty list
+    contact.append(name) # append name to the list contact
+    contact.append(email) # append email to the list contact
+    contact.append(phone) # append phone to the list contact
+    contacts.append(contact) # append contacts to the list contact
+    write_contacts(contacts) # call the function write_contacts with the argument contacts
+    print(f"{contact[0]} was added.") # print "{contact[0]} was added."
+    print() # print blank line
+
+def write_contacts(contacts): # define the write_contacts function with the parameter contacts
+    with open(FILENAME, "w", newline="") as file: # opeb FILENAME as write as file
+        writer = csv.writer(file) # set writer to the writer of file
+        writer.writerows(contacts) # write rows from contacts
+
+def delete(contacts): # define the delete function with the parameter contacts
+    number = get_contact_number(contacts) # set number to the result of get_contact_number with the argument contacts
+    if number > 0: # if number is bigger than 0
+        contact = contacts.pop(number-1) # set contact to contacts removed of number - 1
+        print(f"{contact[0]} was deleted.\n") # print "{contact[0]} was deleted.\n"
+    write_contacts(contacts) # call the function write_contacts with the argument contacts
+
+if __name__ == "__main__":  main() # if name is main call main
